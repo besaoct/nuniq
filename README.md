@@ -249,7 +249,7 @@ const slugConfig = {
 
 // Generate a slug with the given configuration
 const slug = nuniq(slugConfig);
-console.log(slug); // Example output: "quick-lazy-bright-my-awesome-blog-post-john_doe-12-08-2024-14-30-45-randomstring"
+console.log(slug); // Example output: "quick-lazy-bright-my-awesome-blog-post-by-john_doe-12-08-2024-14-30-45-randomstring"
 ```
 
 ### Handling Different Scenarios in `fn: 'slug'`
