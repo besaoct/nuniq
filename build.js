@@ -8,7 +8,7 @@ esbuild.build({
   target: ['node14'],
   format: 'esm',
   plugins: [dtsPlugin()],
-  outdir: 'dist',
+  outdir: './dist',
   sourcemap: false,
   minify: true,
   tsconfig:'./tsconfig.json'
