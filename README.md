@@ -129,7 +129,7 @@ console.log(usernameWithSeed); // Example output: "shafin__green_blcp8049myijc9"
   console.log(randomString); // Example output: "qk56dra7u2l"
   ```
 
-## Usage of `name` Fn
+## Usage of `name` Function
 
 The `name` function generates a random name based on provided configurations. You can customize the word length, separator, and case style.
 
@@ -189,7 +189,7 @@ console.log(randomName); // Example output: "Adventurous-Cat-1234"
   console.log(customName); // Example output: "powerful_lion_bear"
   ```
 
-## Usage of `slug` Fn
+## Usage of `slug` Function
 
 The `slug` function generates a URL-friendly slug with customizable content, author, and separators. It also appends random words and a timestamp.
 
