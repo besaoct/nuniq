@@ -1,17 +1,16 @@
+# Nuniq
 
-# nuniq
-
-`nuniq` is a TypeScript-compatible utility for generating unique names, usernames, or random strings with customizable configurations. It supports various generator functions, optional seeds for deterministic output, and flexible configurations to suit different use cases.
+`nuniq` is a TypeScript-compatible node package for generating unique names, usernames, random strings, and more with customizable configurations. It supports various generator functions, optional seeds for deterministic output, and flexible configurations to suit different use cases.
 
 ## Features
 
 - **Random String Generator**: Create cryptic and hashed random strings of a specified length.
 - **Unique Username Generator**: Generate unique usernames based on full names, email addresses, and custom dictionaries.
-- **Unique Name Generator**:  For generating random and unique names.
-- **Unique Slug Generator**:  For generating url friendly unique and customizable slugs.
+- **Unique Name Generator**: Generate random and unique names.
+- **Unique Slug Generator**: Generate URL-friendly, unique, and customizable slugs.
 - **Customizable Configuration**: Configure generators with keys, dictionaries, and seed values.
 - **Flexible Input**: Accepts configurations in various formats to simplify usage.
-- **Custom Generator**: You can define and use your own custom generator functions with `nuniq`.
+- **Custom Generator**: Define and use your own custom generator functions with `nuniq`.
 
 ## Installation
 
@@ -31,19 +30,18 @@ const randomString = nuniq();
 console.log(randomString); // Example output: "n1kbsbf4mct"
 
 // Generate a random string with a specified length
-
 const randomString20 = nuniq(20); 
-/* Same length of output for:
+/* Other valid ways to specify length:
 const randomString20 = nuniq(20, {});  
 const randomString20 = nuniq({}, 20);
-const randomString20 = nuniq({20});
+const randomString20 = nuniq({ length: 20 });
 */
 console.log(randomString20); // Example output: "qk56dra7u2lbx1c98en0"
 ```
 
-## Usage of `username` Fn
+## Usage of `username` Function
 
-### Configuring the Unique username generator
+### Configuring the Unique Username Generator
 
 You can customize the username generator by providing a configuration object. The configuration can include `fn`, `keys`, `dictionaries`, and an optional `seed`.
 
@@ -67,7 +65,7 @@ const usernameWithSeed = nuniq(config);
 console.log(usernameWithSeed); // Example output: "shafin__green_blcp8049myijc9"
 ```
 
-### Handling Different Seed Scenarios in `fn:'username'`
+### Handling Different Seed Scenarios in `fn: 'username'`
 
 - **No Seed or Empty Seed:**
   When the seed is empty or not provided, the output will vary each time.
@@ -133,11 +131,123 @@ console.log(usernameWithSeed); // Example output: "shafin__green_blcp8049myijc9"
 
 ## Usage of `name` Fn
 
-Coming soon...
+The `name` function generates a random name based on provided configurations. You can customize the word length, separator, and case style.
+
+### Configuring the Name Generator
+
+You can customize the name generator by providing a configuration object with `keys` and optional `dictionaries`, and `seed`.
+
+```typescript
+import { nuniq } from 'nuniq';
+
+const nameConfig = {
+  fn: 'name',
+  keys: {
+    wordLength: 4,
+    separator: '-', //you can use any separator: '',' ','-','_'
+    caseStyle: 'capital', // 'capital', 'uppercase', 'lowercase'
+  },
+  dictionaries: [
+    ['adventurous', 'brave', 'clever'], // Custom adjectives
+    ['blue', 'green', 'yellow'],        // Custom colors
+    ['cat', 'dog', 'wolf'],              // Custom animals
+  ],
+  seed: '1234', // Optional seed for deterministic output
+};
+
+// Generate a name with the given configuration
+const randomName = nuniq(nameConfig);
+console.log(randomName); // Example output: "Adventurous-Cat-1234"
+```
+
+### Handling Different Scenarios in `fn: 'name'`
+
+- **No Configuration or Empty Configuration:**
+
+  ```typescript
+  const defaultNameConfig = {};
+  const defaultName = nuniq(defaultNameConfig);
+  console.log(defaultName); // Example output: "big-cat"
+  ```
+
+- **Custom Dictionaries:**
+
+  ```typescript
+  const customDictionaries = [
+    ['powerful', 'mighty', 'strong'],
+    ['red', 'green', 'blue'],
+    ['lion', 'tiger', 'bear']
+  ];
+  
+  const customNameConfig = {
+    fn: 'name',
+    keys: { wordLength: 3, separator: '_' },
+    dictionaries: customDictionaries,
+  };
+  
+  const customName = nuniq(customNameConfig);
+  console.log(customName); // Example output: "powerful_lion_bear"
+  ```
 
 ## Usage of `slug` Fn
 
-Coming soon...
+The `slug` function generates a URL-friendly slug with customizable content, author, and separators. It also appends random words and a timestamp.
+
+### Configuring the Slug Generator
+
+You can customize the slug generator by providing a configuration object with `keys` and optional `dictionaries`, and `seed`.
+
+```typescript
+import { nuniq } from 'nuniq';
+
+const slugConfig = {
+  fn: 'slug',
+  keys: {
+    content: 'My Awesome Blog Post',
+    author: 'john_doe',
+    contentLength: 50,
+    separator: '-', 
+  },
+  dictionaries: [
+    ['quick', 'lazy', 'bright'], // Custom words to append
+  ],
+  seed: '5678', // Optional seed for deterministic output
+};
+
+// Generate a slug with the given configuration
+const slug = nuniq(slugConfig);
+console.log(slug); // Example output: "quick-lazy-bright-my-awesome-blog-post-john_doe-12-08-2024-14-30-45-randomstring"
+```
+
+### Handling Different Scenarios in `fn: 'slug'`
+
+- **No Configuration or Empty Configuration:**
+
+  ```typescript
+  const defaultSlugConfig = {};
+  const defaultSlug = nuniq(defaultSlugConfig);
+  console.log(defaultSlug); // Example output: "default-slug"
+  ```
+
+- **Custom Content and Author:**
+
+  ```typescript
+  const customSlugConfig = {
+    fn: 'slug',
+    keys: {
+      content: 'New Product Launch',
+      author: 'marketing_team',
+      contentLength: 16, // Maximum number of characters to which the content should be truncated
+      separator: '_', //you can use: '_' or '-'
+    },
+    dictionaries: [
+      ['exciting', 'innovative'], // Custom words to append
+    ],
+  };
+  
+  const customSlug = nuniq(customSlugConfig);
+  console.log(customSlug); // Example output: "exciting_innovative_new_product_launch_by_marketing_team_12-08-2024-14-30-45-randomstring"
+  ```
 
 ## API
 
@@ -151,19 +261,19 @@ Generates a unique string based on the provided configuration or length.
     - **`keys`**: An optional object containing key-value pairs to customize the generator function.
     - **`dictionaries`**: An optional array of arrays, where each sub-array represents a word list to be used in generation.
     - **`seed`**: An optional seed (string or number) for deterministic generation.
-    - **`length`**: Optional length for fallback random string.
+    - **`length`**: Optional length for fallback random string generation.
   - If a number is provided, it specifies the length of the fallback generated string.
 - **`lengthOrConfig`**: An optional parameter that can either be:
   - A number specifying the length of the generated string, or
   - Another configuration object, which will be merged with the first `config` parameter if provided.
   - Note: The length parameter will not override the length of the string generated by specific functions (`fn`). It's primarily useful for fallback random string generation or when no specific generator function is used.
 
-### `nuniqor(name: string, generatorFn: GeneratorFn)`
+### `nuniqor(name: string, config: Config)`
 
 Registers a custom generator function.
 
 - **`name`**: The name to associate with the custom generator.
-- **`generatorFn`**: The generator function.
+- **`config`**: The configuration object for the custom generator function.
 
 ### Config Interface
 
@@ -177,6 +287,17 @@ interface Config {
 }
 ```
 
+### `NuniqDictionaries`
+
+You can use our predefined dictionaries to generate names, usernames or slugs.
+
+```typescript
+import { NuniqDictionaries } from 'nuniq';
+
+// Access predefined dictionaries
+const { Adjectives, Colors, FemaleFirstNames, FemaleSurnames } = NuniqDictionaries;
+```
+
 ## Custom Generator
 
 You can define and use your own custom generator functions with `nuniq`.
@@ -187,10 +308,20 @@ You can define and use your own custom generator functions with `nuniq`.
 
    ```typescript
    // customGenerators.ts
-   
-   import { GeneratorFn } from 'nuniq';
 
-   export const myCustomGenerator: GeneratorFn = (keys, dictionaries, seed) => {
+   import { Config, RandomSeed } from 'nuniq';
+
+   export const myCustomGenerator = (config: Config): string => {
+     const { keys = {}, dictionaries = [], seed } = config;
+
+     // Initialize RNG with sanitized seed or use Math.random
+     const rng = seed ? RandomSeed(seed) : Math.random;
+
+     const {
+       // Custom keys
+       length = 12, // Example length
+     } = keys;
+
      // Your custom generation logic here
      return 'custom_generated_string';
    };
@@ -215,7 +346,7 @@ You can now use your custom generator function with `nuniq`:
 import { nuniq } from 'nuniq';
 
 const configCustom = {
-  fn: 'myCustomGenerator',  // Use the name of your custom generator
+  fn: 'myCustomGenerator', // Use the name of your custom generator
   keys: { /* your keys here */ },
   dictionaries: [ /* your dictionaries here */ ],
   seed: 'optional_seed',
@@ -227,4 +358,4 @@ console.log(generatedString); // Output will be generated by your custom generat
 
 ## License
 
-MIT License © Shafin(@besaoct)
+MIT License © Shafin (@besaoct)

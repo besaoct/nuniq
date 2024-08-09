@@ -1,8 +1,10 @@
-// src/generators.ts
+// generators.ts
 
-import { GeneratorFn } from './types';
-import { username } from './utils';
+import { Config } from './types';
+import { name, slug, username } from './utils';
 
-export const generators: Record<string, GeneratorFn> = {
+export const generators: Record<string, (config: Config) => string> = {
   username,
+  name,
+  slug,
 };

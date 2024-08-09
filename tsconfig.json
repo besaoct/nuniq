@@ -1,21 +1,17 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
+    "target": "ES2020",
     "module": "ESNext",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "declaration": true,
+    "rootDir": "./src",
     "outDir": "./dist",
     "declarationDir": "./dist",
     "moduleResolution": "node"
   },
-  "include": ["src/**/*"],
-  "exclude": [
-    "node_modules",
-    "dist",          
-    "**/*.test.ts", 
-    "build.js"   
-  ]
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules"]
 }
