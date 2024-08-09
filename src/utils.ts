@@ -1,7 +1,7 @@
 // src/utils.ts
 
 import { Config } from './types';
-import { RandomSeed} from './seed'; // Import the custom seed function
+import {RandomSeed} from './seed'; // Import the custom seed function
 import {NuniqDictionary} from './dictionaries'
 /**
  * Generates a slug from content, author, and additional configurations.
@@ -9,9 +9,7 @@ import {NuniqDictionary} from './dictionaries'
  * @returns A slug string.
  */
 
-
 // `username` fn
-
 export const username = (config: Config): string => {
   const {
     keys = {},
@@ -171,16 +169,13 @@ export const name = (config: Config): string => {
   const rng = seed ? RandomSeed(seed) : Math.random;
 
   // Use user-provided dictionaries if any, otherwise fallback to the default ones
-  const availableDictionaries = dictionaries.length > 0
+  const availableDictionaries = dictionaries?.length > 0
     ? dictionaries
     : [Adjectives, Colors, Animals, Digits, Alphabets, MaleFirstNames, FemaleFirstNames];
 
   // Helper function to pick a random item from a list
   const getRandomItem = <T>(list: T[]): T => {
-    if (!Array.isArray(list) || list.length === undefined || list.length === 0 || typeof list.length !== 'number') {
-      throw new Error('Invalid list provided for random selection');
-    }
-    return list[Math.floor(rng() * list.length)];
+    return list[Math.floor(rng() * list?.length)];
   };
 
   // Function to generate a name, wrapped in a try-catch loop
@@ -212,10 +207,9 @@ export const name = (config: Config): string => {
       if (typeof generatedName === 'string') {
         return generatedName;
       } else {
-        throw new Error('Generated name is not a valid string');
+        return ''
       }
     } catch (error) {
-      console.error('Error generating name:', error);
       return '';
     }
   };
@@ -228,4 +222,3 @@ export const name = (config: Config): string => {
 
   return finalName;
 };
-

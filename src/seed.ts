@@ -29,3 +29,4 @@ export function RandomSeed(seed: number | string): () => number {
         return (x >>> 0) / 0xFFFFFFFF;
     };
 }
+
