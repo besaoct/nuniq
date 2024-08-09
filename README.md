@@ -151,7 +151,7 @@ Generates a unique string based on the provided configuration or length.
     - **`dictionaries`**: An optional array of arrays, where each sub-array represents a word list to be used in generation.
     - **`seed`**: An optional seed (string or number) for deterministic generation.
     - **`length`**: Optional length for fallback random string.
-  - If a number is provided, it specifies the length of the generated string.
+  - If a number is provided, it specifies the length of the fallback generated string.
 - **`lengthOrConfig`**: An optional parameter that can either be:
   - A number specifying the length of the generated string, or
   - Another configuration object, which will be merged with the first `config` parameter if provided.
