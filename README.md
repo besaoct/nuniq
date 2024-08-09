@@ -1,3 +1,4 @@
+
 # nuniq
 
 `nuniq` is a TypeScript-compatible utility for generating unique names, usernames, or random strings with customizable configurations. It supports various generator functions, optional seeds for deterministic output, and flexible configurations to suit different use cases.
