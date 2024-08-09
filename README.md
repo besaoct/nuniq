@@ -131,33 +131,42 @@ console.log(usernameWithSeed); // Example output: "shafin__green_blcp8049myijc9"
 
 ## Usage of `name` Function
 
-The `name` function generates a random name based on provided configurations. You can customize the word length, separator, and case style.
+The `name` function generates a name by combining random words from provided dictionaries, with options to include additional salts (random strings) like alphabets, numbers, and alphanumeric characters. The function can be configured with various options to customize the output, such as case style, separators, and the length of the generated name and salts.
 
 ### Configuring the Name Generator
 
 You can customize the name generator by providing a configuration object with `keys` and optional `dictionaries`, and `seed`.
 
 ```typescript
-import { nuniq } from 'nuniq';
+import { nuniq, NuniqDictionary } from 'nuniq';
 
-const nameConfig = {
+const { Colors, Adjectives, Digits } = NuniqDictionary;
+
+const config = {
   fn: 'name',
   keys: {
-    wordLength: 4,
-    separator: '-', //you can use any separator: '',' ','-','_'
-    caseStyle: 'capital', // 'capital', 'uppercase', 'lowercase'
+    wordLength: 2, // Number of words from dictionaries to include in the generated name
+    separator: '_', // Separator between words and salts
+    caseStyle: 'capital', // Capitalize the first letter of each word and salt
+    stringSaltLength: 10, // Add a random string of 10 alphabets as salt
+    numberSaltLength: 5, // Add a random string of 5 digits as salt
+    alphanumericSaltLength: 6, // Add a random alphanumeric string of 6 characters as salt
   },
-  dictionaries: [
-    ['adventurous', 'brave', 'clever'], // Custom adjectives
-    ['blue', 'green', 'yellow'],        // Custom colors
-    ['cat', 'dog', 'wolf'],              // Custom animals
-  ],
-  seed: '1234', // Optional seed for deterministic output
+  seed: 1, // Optional seed for deterministic output
+  dictionaries: [['shafin'], Digits, Colors, Adjectives], // Custom dictionaries to generate the name
 };
 
-// Generate a name with the given configuration
-const randomName = nuniq(nameConfig);
-console.log(randomName); // Example output: "Adventurous-Cat-1234"
+const generatedName = nuniq(config);
+
+console.log(generatedName);
+```
+
+#### Example Output
+
+Running the above code could generate an output like:
+
+```console
+Shafin_blue_Ouowhfpjid_01234_Rvjgl9
 ```
 
 ### Handling Different Scenarios in `fn: 'name'`
@@ -188,6 +197,30 @@ console.log(randomName); // Example output: "Adventurous-Cat-1234"
   const customName = nuniq(customNameConfig);
   console.log(customName); // Example output: "powerful_lion_bear"
   ```
+
+### Configuration Options
+
+- **`fn: string`** - Specifies the function to use. In this case, `'name'`.
+  
+- **`keys: object`** - Configuration options for the `name` function:
+  - **`wordLength: number`** - The number of words to pick from the provided dictionaries.
+  - **`separator: string`** - A string to use as a separator between the words and salts.
+  - **`caseStyle: string`** - The case style to apply to the generated name and salts. Options are:
+    - `'capital'` - Capitalize the first letter of each word.
+    - `'uppercase'` - Convert all characters to uppercase.
+    - `'lowercase'` - Convert all characters to lowercase.
+  - **`stringSaltLength: number`** - The length of the random alphabetic string salt to be added.
+  - **`numberSaltLength: number`** - The length of the random numeric string salt to be added.
+  - **`alphanumericSaltLength: number`** - The length of the random alphanumeric string salt to be added.
+  
+- **`dictionaries: Array<string[]>`** - An array of dictionaries from which words will be randomly selected. Each dictionary should be an array of strings.
+
+### Behavior
+
+- The function randomly selects words from the provided dictionaries based on `wordLength`.
+- It then generates salts (random strings) as per the provided salt lengths (`stringSaltLength`, `numberSaltLength`, `alphanumericSaltLength`).
+- These salts are inserted at random positions in the generated name.
+- The entire name, including salts, can be customized with separators and case styling.
 
 ## Usage of `slug` Function
 
@@ -295,7 +328,7 @@ You can use our predefined dictionaries to generate names, usernames or slugs.
 import { NuniqDictionaries } from 'nuniq';
 
 // Access predefined dictionaries
-const { Adjectives, Colors, FemaleFirstNames, FemaleSurnames } = NuniqDictionaries;
+const { Adjectives, Colors, FemaleFirstNames, FemaleSurnames, MaleFirstNames, MaleSurnames, Animals, Digits, Alphabets} = NuniqDictionaries;
 ```
 
 ## Custom Generator
