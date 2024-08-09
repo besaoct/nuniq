@@ -1,6 +1,6 @@
 {
   "name": "nuniq",
-  "version": "2.0.0",
+  "version": "1.0.0",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -10,10 +10,12 @@
     "prepublishOnly": "npm run build",
     "test": "jest"
   },
+
   "repository": {
     "type": "git",
     "url": "git+https://github.com/besaoct/nuniq"
   },
+
   "keywords": [
     "unique name generator",
     "unique username generator",
@@ -21,24 +23,31 @@
     "unique string generator",
     "nuniq npm-package"
   ],
+
   "homepage": "https://github.com/besaoct/nuniq#readme",
   "author": "Shafin",
   "license": "MIT",
+
   "bugs": {
     "url": "https://github.com/besaoct/nuniq/issues"
   },
+
   "description": "A highly customizable, TypeScript-compatible unique and random string, username, name and slug  generator.",
+  
   "files": [
     "dist",
     "README.md",
     "LICENSE"
   ],
+
   "engines": {
     "node": ">=14.0.0"
   },
+
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
+
   "devDependencies": {
     "@types/jest": "^29.5.12",
     "@types/node": "^22.1.0",

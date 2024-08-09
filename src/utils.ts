@@ -152,8 +152,7 @@ export const slug = (config: Config): string => {
 
 export const name = (config: Config): string => {
   // Default dictionaries
- 
-  const {Adjectives, Colors, Animals, Digits, Alphabets, MaleFirstNames, FemaleFirstNames} = NuniqDictionary
+  const { Adjectives, Colors, Animals, Digits, Alphabets, MaleFirstNames, FemaleFirstNames } = NuniqDictionary;
 
   // Extracting from config
   const {
@@ -177,29 +176,56 @@ export const name = (config: Config): string => {
     : [Adjectives, Colors, Animals, Digits, Alphabets, MaleFirstNames, FemaleFirstNames];
 
   // Helper function to pick a random item from a list
-  const getRandomItem = <T>(list: T[]): T => list[Math.floor(rng() * list.length)];
+  const getRandomItem = <T>(list: T[]): T => {
+    if (!Array.isArray(list) || list.length === undefined || list.length === 0 || typeof list.length !== 'number') {
+      throw new Error('Invalid list provided for random selection');
+    }
+    return list[Math.floor(rng() * list.length)];
+  };
 
-  // Generate the random name based on the specified word length
-  let generatedName = Array.from({ length: wordLength }, () => {
-    // Pick a random dictionary, then a random item from that dictionary
-    const randomDictionary = getRandomItem(availableDictionaries);
-    return getRandomItem(randomDictionary);
-  }).join(separator);
+  // Function to generate a name, wrapped in a try-catch loop
+  const generateName = (): string => {
+    try {
+      let generatedName = Array.from({ length: wordLength }, () => {
+        const randomDictionary = getRandomItem(availableDictionaries);
+        return getRandomItem(randomDictionary);
+      }).join(separator);
 
-  // Apply case style if specified
-  switch (caseStyle) {
-    case 'capital':
-      generatedName = generatedName.replace(/\b\w/g, char => char.toUpperCase());
-      break;
-    case 'uppercase':
-      generatedName = generatedName.toUpperCase();
-      break;
-    case 'lowercase':
-      generatedName = generatedName.toLowerCase();
-      break;
-    default:
-      break; // No case style applied
+      // Apply case style if specified
+      switch (caseStyle) {
+        case 'capital':
+          generatedName = generatedName
+            .split(separator)
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+            .join(separator);
+          break;
+        case 'uppercase':
+          generatedName = generatedName.toUpperCase();
+          break;
+        case 'lowercase':
+          generatedName = generatedName.toLowerCase();
+          break;
+        default:
+          break; // No case style applied
+      }
+
+      if (typeof generatedName === 'string') {
+        return generatedName;
+      } else {
+        throw new Error('Generated name is not a valid string');
+      }
+    } catch (error) {
+      console.error('Error generating name:', error);
+      return '';
+    }
+  };
+
+  // Keep generating until a valid name is created
+  let finalName = '';
+  while (!finalName) {
+    finalName = generateName();
   }
 
-  return generatedName;
+  return finalName;
 };
+
