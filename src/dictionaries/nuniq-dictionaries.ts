@@ -1,6 +1,4 @@
 
-// dictionaries.ts
-
 const MaleFirstNames = [
     'shafin', 'arif', 'faisal', 'rahim',
     'alak', 'arjun', 'rohan', 'vikram', 'sachin', 'anil', 'rahul', 'suresh', 'amit', 'vijay',

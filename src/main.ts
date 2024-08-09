@@ -1,5 +1,3 @@
-// nuniq.ts
-
 import { Config } from './types';
 import { generators } from './generators';
 
@@ -29,11 +27,31 @@ export function nuniq(config?: Config | number, lengthOrConfig?: number | Config
     return generatorFn(finalConfig);
   }
 
+
+  const randomString = (len: number): string => {
+    const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let result = '';
+    let dateSalt = new Date().toISOString().replace(/[^0-9]/g, '');
+    let combinedSeed = `${Math.random()}${dateSalt}${len}`;
+    
+    for (let i = 0; i < len; i++) {
+      let hash = 0;
+      for (let j = 0; j < combinedSeed.length; j++) {
+        hash = (hash << 5) - hash + combinedSeed.charCodeAt(j);
+        hash |= 0;
+      }
+      result += charset[Math.abs(hash) % charset.length];
+      combinedSeed = result; // Use the result as a new seed for the next iteration
+    }
+    return result;
+  };
+
   // Fallback: Generate a random string if no valid function is provided
   const length = finalConfig.length || 12;
-
   return randomString(length);
 }
+
+
 
 /**
  * Registers a custom generator function.
@@ -48,25 +66,34 @@ export function nuniqor(name: string, generatorFn: (config: Config) => string) {
   }
 }
 
-/**
- * Generates a cryptic random string.
- * @param len - Length of the random string.
- * @returns A cryptic random string of the specified length.
- */
-const randomString = (len: number): string => {
-  const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  let result = '';
-  let dateSalt = new Date().toISOString().replace(/[^0-9]/g, '');
-  let combinedSeed = `${Math.random()}${dateSalt}${len}`;
-  
-  for (let i = 0; i < len; i++) {
-    let hash = 0;
-    for (let j = 0; j < combinedSeed.length; j++) {
-      hash = (hash << 5) - hash + combinedSeed.charCodeAt(j);
-      hash |= 0;
-    }
-    result += charset[Math.abs(hash) % charset.length];
-    combinedSeed = result; // Use the result as a new seed for the next iteration
+
+export function RandomSeed(seed: number | string): () => number {
+  // Sanitize and normalize seed
+  const sanitizedSeed = typeof seed === 'number'
+      ? seed.toString()
+      : seed.replace(/[^a-zA-Z0-9]/g, '');
+
+  function fnv1aHash(str: string): number {
+          let hash = 2166136261;
+          for (let i = 0; i < str.length; i++) {
+              hash ^= str.charCodeAt(i);
+              hash += (hash << 1) + (hash << 4) + (hash << 7) + (hash << 8) + (hash << 24);
+          }
+          return hash >>> 0;
   }
-  return result;
-};
+  
+  // Hash the sanitized seed
+  const hashedSeed = fnv1aHash(sanitizedSeed);
+
+  // Convert hashed seed to a usable RNG state
+  let x = hashedSeed;
+
+  // Return a function to generate pseudo-random numbers
+  return () => {
+      x ^= x << 13;
+      x ^= x >> 17;
+      x ^= x << 5;
+      return (x >>> 0) / 0xFFFFFFFF;
+  };
+}
+

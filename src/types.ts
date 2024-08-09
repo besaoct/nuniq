@@ -1,6 +1,4 @@
-// types.ts
 import { generators } from './generators';
-
 export interface Config {
   fn?: keyof typeof generators; // Optional generator function key
   keys?: Record<string, any>;   // Optional keys for the generator function
