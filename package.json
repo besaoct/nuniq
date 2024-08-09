@@ -7,7 +7,6 @@
   "scripts": {
     "build": "node build.js",
     "prepare": "npm run build",
-    "prepublishOnly": "npm test",
     "test": "jest"
   },
   "repository": {
