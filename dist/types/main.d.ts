@@ -1,4 +1,4 @@
-import { Config } from './index';
+import { Config } from './types';
 /**
  * Generates a unique name or string based on the provided configuration.
  * Delegates the generation process to the appropriate function.

@@ -1,4 +1,4 @@
-import { Config } from '../index';
+import { Config } from '../types';
 /**
  * Generates a slug from content, author, and additional configurations.
  * @param config - The configuration object.
