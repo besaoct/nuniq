@@ -6,24 +6,10 @@ esbuild.build({
   bundle: true,
   platform: 'node',
   target: ['node14'],
-  format: 'cjs',
-  plugins: [dtsPlugin()],
-  outdir: './dist/cjs',
-  sourcemap: false,
-  minify: true,
-  tsconfig:'./tsconfig.json'
-}).catch(() => process.exit(1));
-
-
-esbuild.build({
-  entryPoints: ['./src/index.ts'],
-  bundle: true,
-  platform: 'node',
-  target: ['node14'],
   format: 'esm',
   plugins: [dtsPlugin()],
-  outdir: './dist/esm',
+  outdir: './dist',
   sourcemap: false,
-  minify: true,
   tsconfig:'./tsconfig.json'
 }).catch(() => process.exit(1));
+

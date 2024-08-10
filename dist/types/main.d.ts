@@ -12,4 +12,10 @@ export declare function nuniq(config?: Config | number, lengthOrConfig?: number 
  * @param generatorFn - The generator function that generates a string based on the provided configuration.
  */
 export declare function nuniqor(name: string, generatorFn: (config: Config) => string): void;
+/**
+ * Creates a pseudo-random number generator based on a given seed.
+ * The generator returns numbers between 0 and 1.
+ * @param seed - The seed value, which can be a number or a string.
+ * @returns A function that generates pseudo-random numbers.
+ */
 export declare function RandomSeed(seed: number | string): () => number;
