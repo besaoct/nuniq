@@ -7,9 +7,9 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "rootDir": "./src",
-    "outDir": "./dist",
+    "outDir": "./dist/types",
     "declaration": true,
-    "declarationDir": "./dist",
+    "declarationDir": "./dist/types",
     "moduleResolution": "node"
   },
   "include": ["src/**/*.ts"],
