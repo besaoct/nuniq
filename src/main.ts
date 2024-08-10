@@ -1,4 +1,4 @@
-import { Config } from './types';
+import { Config } from './index';
 import { generators } from './generators';
 
 /**

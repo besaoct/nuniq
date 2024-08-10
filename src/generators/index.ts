@@ -1,4 +1,4 @@
-import { Config } from '../types';
+import { Config } from '../index';
 import { username } from './username';
 import { name } from './name';
 import { slug } from './slug';
