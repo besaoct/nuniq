@@ -10,6 +10,7 @@ esbuild.build({
   plugins: [dtsPlugin()],
   outdir: './dist',
   sourcemap: false,
-  tsconfig:'./tsconfig.json'
+  tsconfig:'./tsconfig.json',
+  minify:true
 }).catch(() => process.exit(1));
 
